@@ -78,6 +78,7 @@ class NjuskaloQueryCrawler():
             # Break if no entities found (end of listings)
             if not entities:
                 print(f'No more listings found on page {currentPage}')
+                file.close()
                 break
 
             file = open(out_folder + sanitized_filename + '.json', 'w', encoding='utf-8')
@@ -137,20 +138,4 @@ class NjuskaloQueryCrawler():
             print(category_href)
 
             self._crawlCategoryLink(category_href, page, options.outFolder, options.pageLimit)
-
-    #If there is no page after this, returns None
-    def _getNextPageLink(self, soup):
-        try:
-            pagination_html = soup.find('ul', class_='Pagination-items')
-            # Using a lambda allows matching any span that contains '»'
-            nextButtonSpan = pagination_html.find('span', text=lambda t: t and '»' in t)
-            if nextButtonSpan is None:
-                return None
-            else:
-                try:
-                    return nextButtonSpan.parent['data-href']
-                except:
-                    return nextButtonSpan.parent['href']
-        except:
-            return None
         

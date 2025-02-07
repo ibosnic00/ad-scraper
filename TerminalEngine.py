@@ -1,6 +1,5 @@
 from NjuskaloCrawler import NjuskaloCrawler
-from CrawlingOptions import CustomCategoryCrawlingOptions, TabCrawlingOptions
-from NjuskaloTab import NjuskaloTab
+from CrawlingOptions import CustomCityCrawlingOptions
 from enum import Enum
 
 splash_message = """
@@ -27,50 +26,27 @@ splash_message = """
 """
 
 class TerminalEngine:
-    def _runWholeTab(self):
-        print("Pick a tab to crawl: 1 = Marketplace, 2 = AutoMoto, Anything else = Nekretnine")
-        choice = input()
-        tab_option = None
-        if (choice == '1'):
-            tab_option = NjuskaloTab.Marketplace
-        elif (choice == '2'):
-            tab_option = NjuskaloTab.AutoMoto
-        else:
-            tab_option = NjuskaloTab.Nekretnine
-
-        
-        choice = 250
-        print(f"Limit on the pages scraped: {choice}")
-        page_num_option = choice
-        
-        data_folder = "results"
-
-        options = TabCrawlingOptions(tab_option, data_folder, int(page_num_option))
-        crawler = NjuskaloCrawler()
-        crawler.crawlTab(options = options)
-    def _runCustomCategory(self):
-        print("Pick a category link to crawl: '/prodaja-kuca', '/prodaja-kuca/istra', etc...")
-        print("This is basically everyhing after www.njuskalo.hr in the link in chrome")
+    def _runCustomCity(self):
+        print("Pick a city link to crawl: 'split', 'zagreb', etc...")
+        print("This is basically everyhing after www.njuskalo.hr/iznajmljivanje-stanova/ in the link in chrome")
 
         category_href = input()
 
-
-        choice = 250
-        print(f"Limit on the pages scraped: {choice}")
-
-        page_num_option = choice
+        page_num_option = 250        
+        data_folder = "results"        
         
-        data_folder = "results"
+        print(f"Data folder: {data_folder}")
+        print(f"Limit on the pages scraped: {page_num_option}")
 
-        options = CustomCategoryCrawlingOptions(category_href, data_folder, int(page_num_option))
+        options = CustomCityCrawlingOptions(category_href, data_folder, int(page_num_option))
         crawler = NjuskaloCrawler()
-        crawler.crawlCustomCategory(options = options)
+        crawler.crawlCustomCity(options = options)
 
     def runCoreLoop(self):
         print(splash_message)
         while True:
-            print("Running crawling of custom category on Njuskalo")            
-            self._runCustomCategory()
+            print("Running crawling of custom city on Njuskalo")            
+            self._runCustomCity()
 
             print ("Crawling complete!")
         print('Hope you like this tool! Please leave a star on github if you did :)!')
