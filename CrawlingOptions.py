@@ -7,4 +7,4 @@ class CustomCityCrawlingOptions:
     def __init__(self, categoryHref, outFolder, pageLimit = None):
         self.categoryHref = "/iznajmljivanje-stanova/" + categoryHref
         self.pageLimit = pageLimit
-        self.outFolder = outFolder + "\\\\"
+        self.outFolder = outFolder + "/"
